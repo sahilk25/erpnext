@@ -1,5 +1,6 @@
 {
  "allow_import": 1,
+ "allow_rename": 1,
  "autoname": "field:batch_id",
  "creation": "2013-03-05 14:50:38",
  "doctype": "DocType",
@@ -16,9 +17,10 @@
   "parent_batch",
   "manufacturing_date",
   "display_on_website",
-  "column_break_3",
   "batch_qty",
   "stock_uom",
+  "column_break_3",
+  "coa_batch",
   "expiry_date",
   "harvest_date",
   "packaged_date",
@@ -27,6 +29,7 @@
   "source",
   "supplier",
   "customer",
+  "provided_by_customer",
   "column_break_9",
   "reference_doctype",
   "reference_name",
@@ -220,13 +223,25 @@
    "label": "Customer",
    "options": "Customer",
    "read_only": 1
+  },
+  {
+   "fieldname": "coa_batch",
+   "fieldtype": "Data",
+   "label": "COA Batch"
+  },
+  {
+   "fieldname": "provided_by_customer",
+   "fieldtype": "Link",
+   "label": "Provided by Customer",
+   "options": "Customer",
+   "read_only": 1
   }
  ],
  "icon": "fa fa-archive",
  "idx": 1,
  "image_field": "image",
  "max_attachments": 5,
- "modified": "2021-03-18 00:20:52.920465",
+ "modified": "2021-05-03 00:52:50.809083",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Batch",
@@ -319,6 +334,5 @@
  "quick_entry": 1,
  "search_fields": "item,item_name,batch_qty,stock_uom",
  "sort_field": "modified",
- "sort_order": "DESC",
- "title_field": "batch_id"
+ "sort_order": "DESC"
 }
