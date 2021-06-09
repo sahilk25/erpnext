@@ -5,11 +5,13 @@
 from __future__ import unicode_literals
 import frappe
 from frappe import _
+from frappe.utils import flt
 from frappe.model.document import Document
 
 class QuotingSheet(Document):
 	def validate(self):
-		self.calculate_raw_material_cost()
+		self.calculate_single_raw_material_cost()
+		self.calculate_total_raw_material_cost()
 		self.calculate_totals()
 
 	def calculate_totals(self):
@@ -18,13 +20,37 @@ class QuotingSheet(Document):
 		"""
 		total_charges = self.rm_cost + self.packaging_charges + self.shipping_cost
 		self.total_price = total_charges + ((total_charges * int(self.profit_markup))/100)
-
+		 
 		self.price_per_unit = self.total_price / self.qty
 
-	def calculate_raw_material_cost(self):
+	def calculate_total_raw_material_cost(self):
 		self.rm_cost = 0
 		for item in self.raw_material_items:
 			self.rm_cost += item.amount
+
+	def get_raw_materials(self):
+		# raw_materials_list = []
+		self.raw_material_items = []
+		raw_materials = frappe.get_all("BOM Item", filters={"parent": self.bom})
+		for material in raw_materials:
+			bom_items = frappe.db.get_value("BOM Item", material.name, ["item_code", "qty", "rate", "uom", "item_name"], as_dict = 1 )
+			if bom_items:
+				self.append("raw_material_items", {
+					"item_code": bom_items.get("item_code"),
+					"qty": bom_items.get("qty"),
+					"rate": bom_items.get("rate"),
+					"uom": bom_items.get("uom"),
+					"item_name": bom_items.get("item_name")
+				})
+		self.calculate_single_raw_material_cost()
+		self.rm_cost = 0
+		# self.calculate_total_raw_material_cost()
+		# 	raw_materials_list.append(frappe.db.get_value("BOM Item", material.name, ["item_code", "qty", "rate", "uom", "item_name"], as_dict = 1 ))
+		# print("RAW MATERIAL============", raw_materials_list)
+		# self.raw_materials_items = raw_materials_list
+	def calculate_single_raw_material_cost(self):
+		for item in self.raw_material_items:
+			item.amount = flt(item.qty) * flt(item.rate)
 
 
 @frappe.whitelist()
@@ -52,3 +78,5 @@ def update_latest_rate(docname):
 		item.amount = rate.valuation_rate * item.qty
 	doc.save()
 	frappe.msgprint(_("Rate updated"))
+
+	
