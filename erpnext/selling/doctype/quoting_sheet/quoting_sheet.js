@@ -1,11 +1,31 @@
 // Copyright (c) 2021, Frappe Technologies Pvt. Ltd. and contributors
 // For license information, please see license.txt
 frappe.ui.form.on('Quoting Sheet', {
-	item_code: function (frm) {
-		if (frm.doc.currency == frappe.sys_defaults.currency) {
-			frm.set_value("conversion_rate", 1.0);
+	onload: (frm) => {
+		frm.set_query("bom", () => {
+			if (frm.doc.item_code) {
+				return {
+					filters: {
+						"item": frm.doc.item_code
+					}
+				};
+			}
+		});
+	},
+	bom: function (frm) {
+		if (frm.doc.bom) {
+			frappe.call({
+				method: "get_raw_materials",
+				doc: frm.doc,
+				callback: (res) => {
+					console.log("BITCH============", res)
+					// frm.doc.raw_material_items = res.message
+					frm.refresh_field("raw_material_items")
+				},
+			})
 		}
 	},
+
 
 	update_rate: function (frm) {
 		frappe.call({

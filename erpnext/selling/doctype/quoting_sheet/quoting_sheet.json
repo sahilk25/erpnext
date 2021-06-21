@@ -11,8 +11,8 @@
   "lead",
   "column_break_4",
   "currency",
-  "conversion_rate",
   "qty",
+  "bom",
   "section_break_8",
   "raw_material_items",
   "update_rate",
@@ -24,6 +24,7 @@
   "section_break_15",
   "profit_markup",
   "bulk_discounting_section",
+  "bulk_discount",
   "section_break_16",
   "total_price",
   "column_break_17",
@@ -93,12 +94,6 @@
    "fieldtype": "Currency",
    "label": "Price Per Unit",
    "read_only": 1
-  },
-  {
-   "fieldname": "conversion_rate",
-   "fieldtype": "Float",
-   "label": "Conversion Rate",
-   "reqd": 1
   },
   {
    "fieldname": "currency",
@@ -171,10 +166,22 @@
    "fieldname": "update_rate",
    "fieldtype": "Button",
    "label": "Update Rate"
+  },
+  {
+   "fieldname": "bom",
+   "fieldtype": "Link",
+   "label": "BOM",
+   "options": "BOM"
+  },
+  {
+   "fieldname": "bulk_discount",
+   "fieldtype": "Table",
+   "label": "bulk discount",
+   "options": "Promotional Scheme"
   }
  ],
  "is_submittable": 1,
- "modified": "2021-06-02 23:07:43.385905",
+ "modified": "2021-06-15 01:05:31.869794",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Quoting Sheet",
