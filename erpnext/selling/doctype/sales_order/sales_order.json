@@ -1294,6 +1294,7 @@
    "fieldname": "is_overdue",
    "fieldtype": "Check",
    "hidden": 1,
+   "in_standard_filter": 1,
    "label": "Is Overdue"
   }
  ],
