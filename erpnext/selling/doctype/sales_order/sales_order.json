@@ -1285,7 +1285,8 @@
    "fieldname": "contract",
    "fieldtype": "Link",
    "label": "Contract",
-   "options": "Contract"
+   "options": "Contract",
+   "read_only": 1
   },
   {
    "default": "0",
