@@ -1311,6 +1311,7 @@
    "options": "Compliance Info"
   },
   {
+   "depends_on": "eval:doc.docstatus==0",
    "fieldname": "reverse_calculate",
    "fieldtype": "Button",
    "label": "Reverse Calculate"
